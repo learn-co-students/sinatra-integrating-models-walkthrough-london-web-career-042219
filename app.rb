@@ -7,8 +7,9 @@ class App < Sinatra::Base
   end
 
   post '/' do
-    text_from_user = params[:user_text]
-
+    @analyzed_text = TextAnalyzer.new(params[:user_text])
+    @answer_key = @analyzed_text.most_used_letter.map{|x, y| x}.join
+    @answer_value = @analyzed_text.most_used_letter.map{|x, y| y}.join
     erb :results
   end
 end
